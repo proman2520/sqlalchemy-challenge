@@ -32,11 +32,7 @@ session = Session(engine)
 #################################################
 app = Flask(__name__)
 
-recent_date = session.query(Measurement.date).order_by(Measurement.date.desc()).first()
 one_year_ago = dt.date(2017, 8, 23) - dt.timedelta(days=365)
-active_stations = session.query(Measurement.station, func.count(Measurement.station)).group_by(Measurement.station).\
-    order_by(func.count(Measurement.station).desc()).all()
-most_active_station = active_stations[0][0]
 
 #################################################
 # Flask Routes
@@ -52,8 +48,10 @@ def home():
         f"/api/v1.0/precipitation <br/>"
         f"/api/v1.0/stations <br/>"
         f"/api/v1.0/tobs <br/>"
-        f"/api/v1.0/start-date <br/>"
-        f"/api/v1.0/start-date/end-date <br/>"
+        f"/api/v1.0/start-date (Enter as format YYYY-MM-DD) <br/>"
+        f"/api/v1.0/start-date/end-date (Enter as format YYYY-MM-DD/YYYY-MM-DD) <br/>"
+        f"<br/>"
+        f"API by Andrew Prozorovsky"
     )
 
 @app.route("/api/v1.0/precipitation")
@@ -91,8 +89,8 @@ def stations():
 @app.route("/api/v1.0/tobs")
 def tobs():
     """Return a JSON list of temperature observations for the previous year for the most-active station."""
-    data = session.query(Measurement.date, Measurement.tobs).filter(Measurement.date >= one_year_ago).\
-    filter(Measurement.station == most_active_station).all()
+    data = session.query(Measurement.date, Measurement.tobs).filter(Measurement.station == 'USC00519281').\
+    filter(Measurement.date >= one_year_ago).all()
     
     session.close()
 
@@ -101,22 +99,48 @@ def tobs():
         temp_dict = {}
         temp_dict["date"] = date
         temp_dict["temperature"] = temp
-        temp_dict["station"] = most_active_station
+        temp_dict["station"] = 'USC00519281'
         temp_data.append(temp_dict)
     
     return (jsonify(temp_data))
 
 @app.route("/api/v1.0/<start>")
-def start():
-    return (
-        "STILL TO DO"
-    )
+def temps_start(start):
+    """Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start or start-end range."""
+    data = session.query(Measurement.date, func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
+        filter(Measurement.date >= start).all()
+    
+    session.close()
+
+    temp_data = []
+    for date, min, max, avg in data:
+        temp_dict = {}
+        temp_dict["date"] = date
+        temp_dict["min temp"] = min
+        temp_dict["max temp"] = max
+        temp_dict["average temp"] = avg
+        temp_data.append(temp_dict)
+
+    return (jsonify(temp_data))
 
 @app.route("/api/v1.0/<start>/<end>")
-def start_end():
-    return (
-        "STILL TO DO"
-    )
+def temps_start_end(start, end):
+    """Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start or start-end range."""
+    data = session.query(Measurement.date, func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
+        filter(Measurement.date >= start).filter(Measurement.date <= end).all()
+    
+    session.close()
+
+    temp_data = []
+    for date, min, max, avg in data:
+        temp_dict = {}
+        temp_dict["date"] = date
+        temp_dict["min temp"] = min
+        temp_dict["max temp"] = max
+        temp_dict["average temp"] = avg
+        temp_data.append(temp_dict)
+
+    return (jsonify(temp_data))
 
 if __name__ == '__main__':
     app.run(debug=True) 
@@ -125,3 +149,4 @@ if __name__ == '__main__':
 #QUESTIONS FOR LAS
 # What does .all() do and why is it important for turning an object address into an array?
 # What does the automapper do?
+# Why can't I return an f string before the jsonified data? If I wanted to make the page look somewhat pretty?
