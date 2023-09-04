@@ -8,7 +8,8 @@ pathways.
 
 Regarding help from other places, I mostly referenced the class activity solutions (the Zoom recordings 
 have not yet been posted). I consulted AskBCS 3 times, all regarding confusion over the Flask code. Two 
-times my code was debugged, and the third time was simply a misreading of the rubric/instructions.
+times my code was debugged, and the third time was simply a misreading of the rubric/instructions. The 
+datetime conversion lines were provided to me by AskBCS help, though the code works without them.
 
 The rubric is complicated, so if I am not able to get full points, please let me know where I missed the 
 objectives. I intend to fix any errors. Thank you for your time grading my assignment.

@@ -43,7 +43,7 @@ def home():
     return (
         f"<b>Hawaii Climate API - Module 10 Challenge</b> <br/>"
         f"-----------------------------------------<br/>"
-        f"<i>Available routes:</i> <br/>"
+        f"<i>API DOCUMENTATION</i><br/>Available routes: <br/>"
         f"<br/>"
         f"To return a JSON dictionary of the last 12 months of precipitation data, use this path:<br/>"
         f"/api/v1.0/precipitation <br/>"
