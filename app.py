@@ -41,15 +41,25 @@ one_year_ago = dt.date(2017, 8, 23) - dt.timedelta(days=365)
 def home():
     """List all available API routes."""
     return (
-        f"Hawaii Climate API - Module 10 Challenge <br/>"
+        f"<b>Hawaii Climate API - Module 10 Challenge</b> <br/>"
         f"-----------------------------------------<br/>"
-        f"Available routes: <br/>"
+        f"<i>Available routes:</i> <br/>"
         f"<br/>"
+        f"To return a JSON dictionary of the last 12 months of precipitation data, use this path:<br/>"
         f"/api/v1.0/precipitation <br/>"
+        f"<br/>"
+        f"To return a JSON dictionary of all the stations included in the data set, use this path:<br/>"
         f"/api/v1.0/stations <br/>"
+        f"<br/>"
+        f"To return a JSON list of temperature observations for the previous year for the most-active station, use this path:<br/>"
         f"/api/v1.0/tobs <br/>"
+        f"<br/>"
+        f"The following paths will return the minimum, maximum, and average temperature over the given interval, \
+            through the end of the dataset if a specified end-date is not included.<br/>"
+        f"<br/>"
         f"/api/v1.0/start-date (Enter as format YYYY-MM-DD) <br/>"
         f"/api/v1.0/start-date/end-date (Enter as format YYYY-MM-DD/YYYY-MM-DD) <br/>"
+        f"<br/>"
         f"<br/>"
         f"API by Andrew Prozorovsky"
     )
@@ -115,7 +125,7 @@ def temps_start(start):
     temp_data = []
     for min, max, avg in data:
         temp_dict = {}
-        temp_dict["start date"] = start
+        temp_dict["date start"] = start
         temp_dict["min temp"] = min
         temp_dict["max temp"] = max
         temp_dict["average temp"] = avg
@@ -134,8 +144,8 @@ def temps_start_end(start, end):
     temp_data = []
     for min, max, avg in data:
         temp_dict = {}
-        temp_dict["start date"] = start
-        temp_dict["end date"] = end
+        temp_dict["date start"] = start
+        temp_dict["date end"] = end
         temp_dict["min temp"] = min
         temp_dict["max temp"] = max
         temp_dict["average temp"] = avg
@@ -146,6 +156,7 @@ def temps_start_end(start, end):
 if __name__ == '__main__':
     app.run(debug=True) 
 
+#END OF CODE
 
 #QUESTIONS FOR LAS
 # What does .all() do and why is it important for turning an object address into an array?
