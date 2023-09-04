@@ -107,15 +107,15 @@ def tobs():
 @app.route("/api/v1.0/<start>")
 def temps_start(start):
     """Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start or start-end range."""
-    data = session.query(Measurement.date, func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
+    data = session.query(func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
         filter(Measurement.date >= start).all()
     
     session.close()
 
     temp_data = []
-    for date, min, max, avg in data:
+    for min, max, avg in data:
         temp_dict = {}
-        temp_dict["date"] = date
+        temp_dict["start date"] = start
         temp_dict["min temp"] = min
         temp_dict["max temp"] = max
         temp_dict["average temp"] = avg
@@ -126,15 +126,16 @@ def temps_start(start):
 @app.route("/api/v1.0/<start>/<end>")
 def temps_start_end(start, end):
     """Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start or start-end range."""
-    data = session.query(Measurement.date, func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
+    data = session.query(func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
         filter(Measurement.date >= start).filter(Measurement.date <= end).all()
     
     session.close()
 
     temp_data = []
-    for date, min, max, avg in data:
+    for min, max, avg in data:
         temp_dict = {}
-        temp_dict["date"] = date
+        temp_dict["start date"] = start
+        temp_dict["end date"] = end
         temp_dict["min temp"] = min
         temp_dict["max temp"] = max
         temp_dict["average temp"] = avg
