@@ -162,3 +162,8 @@ if __name__ == '__main__':
 # What does .all() do and why is it important for turning an object address into an array?
 # What does the automapper do?
 # Why can't I return an f string before the jsonified data? If I wanted to make the page look somewhat pretty?
+
+#STILL TO DO
+# Review work and rubric
+# Check on datetime conversions
+# Submit repo (return later to improve)
