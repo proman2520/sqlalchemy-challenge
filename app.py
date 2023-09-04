@@ -39,7 +39,6 @@ app = Flask(__name__)
 #################################################
 @app.route("/")
 def home():
-    """List all available api routes."""
     return (
         f"Hawaii Climate API - Module 10 Challenge <br/>"
         f"-----------------------------------------<br/>"
@@ -48,6 +47,39 @@ def home():
         f"/api/v1.0/precipitation <br/>"
         f"/api/v1.0/stations <br/>"
         f"/api/v1.0/tobs <br/>"
-        f"/api/v1.0/<start> <br/>"
-        f"/api/v1.0/<start>/<end> <br/>"
+        f"/api/v1.0/start-date <br/>"
+        f"/api/v1.0/start-date/end-date <br/>"
     )
+
+@app.route("/api/v1.0/precipitation")
+def precipitation():
+    return (
+        "STILL TO DO"
+    )
+
+@app.route("/api/v1.0/stations")
+def stations():
+    return (
+        "STILL TO DO"
+    )
+
+@app.route("/api/v1.0/tobs")
+def tobs():
+    return (
+        "STILL TO DO"
+    )
+
+@app.route("/api/v1.0/<start>")
+def start():
+    return (
+        "STILL TO DO"
+    )
+
+@app.route("/api/v1.0/<start>/<end>")
+def start_end():
+    return (
+        "STILL TO DO"
+    )
+
+if __name__ == '__main__':
+    app.run() 
