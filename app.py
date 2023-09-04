@@ -37,5 +37,17 @@ app = Flask(__name__)
 #################################################
 # Flask Routes
 #################################################
-
-#Do the routes here
+@app.route("/")
+def home():
+    """List all available api routes."""
+    return (
+        f"Hawaii Climate API - Module 10 Challenge <br/>"
+        f"-----------------------------------------<br/>"
+        f"Available routes: <br/>"
+        f"<br/>"
+        f"/api/v1.0/precipitation <br/>"
+        f"/api/v1.0/stations <br/>"
+        f"/api/v1.0/tobs <br/>"
+        f"/api/v1.0/<start> <br/>"
+        f"/api/v1.0/<start>/<end> <br/>"
+    )
