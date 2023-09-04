@@ -117,6 +117,9 @@ def tobs():
 @app.route("/api/v1.0/<start>")
 def temps_start(start):
     """Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start or start-end range."""
+    
+    start = dt.datetime.strptime(start, "%Y-%m-%d")
+
     data = session.query(func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
         filter(Measurement.date >= start).all()
     
@@ -136,6 +139,10 @@ def temps_start(start):
 @app.route("/api/v1.0/<start>/<end>")
 def temps_start_end(start, end):
     """Return a JSON list of the minimum temperature, the average temperature, and the maximum temperature for a specified start or start-end range."""
+    
+    start = dt.datetime.strptime(start, "%Y-%m-%d")
+    end = dt.datetime.strptime(end, "%Y-%m-%d")
+    
     data = session.query(func.min(Measurement.tobs), func.max(Measurement.tobs), func.avg(Measurement.tobs)).\
         filter(Measurement.date >= start).filter(Measurement.date <= end).all()
     
